@@ -14,7 +14,7 @@ import {
     Typography
 } from '@mui/material';
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom'; 
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -22,6 +22,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [successful, setSuccessful] = useState('idle');
     const [loginData, setLoginData] = useState(null);
+    const navigate = useNavigate();
 
     async function handleError(error) {
         console.error('ورود ناموفق:', error);
@@ -97,34 +98,14 @@ const Login = () => {
                   sx={{ mt: 3, mb: 2 }}
                   disabled={loading}
                   color="primary"
+                  onClick={() => navigate('/auth/users')}
                 >
                   {loading ? <CircularProgress size={24} /> : 'ورود'}
                 </Button>
-                {successful === 'success' && <Alert severity="success">ورود موفقیت‌آمیز</Alert>}
-                {successful === 'error' && <Alert severity="error">ورود ناموفق</Alert>}
-                {loginData && (
-                  <Box sx={{ mt: 2, p: 2, bgcolor: 'background.paper', borderRadius: 1, boxShadow: 1 }}>
-                    <Typography variant="subtitle1" gutterBottom fontWeight="bold">
-                      اطلاعات ورود:
-                    </Typography>
-                    <List dense>
-                      <ListItem>
-                        <ListItemText primary={`نام: ${loginData.user.name}`} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText primary={`ایمیل: ${loginData.user.email}`} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText primary={`ادمین: ${loginData.user.isAdmin ? 'بله' : 'خیر'}`} />
-                      </ListItem>
-                    </List>
-                  </Box>
-                )}
               </Box>
             </Box>
           );
 };
-
 
 
 const SignUp = () => {
